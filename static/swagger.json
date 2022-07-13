@@ -1,0 +1,213 @@
+{
+  "info": {
+    "description": "Rock Paper Scissors - API Book",
+    "version": "1.0.0",
+    "title": "Rock Paper Scissors",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "tags": [
+    {
+      "name": "Requests",
+      "description": "Example API for requesting and return - Rock Paper Scissors"
+    }
+  ],
+"swagger": "2.0",
+  "paths": {
+    "/api/get-user-stat": {
+      "get": {
+        "summary": "Returns from the database user and their current credits",
+        "tags": ["Requests"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+                "type": "object",
+                "properties": {
+                  "user_{id}": {"type": "object", "properties": {
+                    "id": {"type": "integer"},
+                    "credits": {"type": "integer"},
+                    "draw": {"type": "integer"},
+                    "win": {"type": "integer"},
+                    "lose": {"type": "integer"}
+                  }}
+                }
+            }
+          },
+          "400": {
+            "description": "No users in the database! You need to create one via /api/create-new-user",
+            "schema": {
+                "type": "object",
+                "properties": {
+                  "Error": {"type": "string"}
+                }
+            }
+          },
+          "405": {
+            "description": "The method is not allowed for the requested URL. Use GET method."
+          }
+        }
+      }
+    },
+    "/api/get-result-from-day/{date}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "date",
+            "description": "As \"date\" value input date in %Y-%m-%d format",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "Returns game statistics for the given day",
+        "tags": ["Requests"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+                "type": "object",
+                "properties": {
+                  "game_{id}": {"type": "object", "properties": {
+                    "user_id": {"type": "integer"},
+                    "result": {"type": "string"},
+                    "credits_before_game": {"type": "integer"},
+                    "game_time": {"type": "string"}
+                  }}
+                }
+            }
+          },
+          "400": {
+            "description": "There were no games that day!",
+            "schema": {
+                "type": "object",
+                "properties": {
+                  "Error": {"type": "string"}
+                }
+            }
+          },
+          "405": {
+            "description": "The method is not allowed for the requested URL. Use GET method."
+          }
+        }
+      }
+    },
+    "/api/create-new-user": {
+      "post": {
+        "summary": "Create a new user",
+        "tags": ["Requests"],
+        "responses": {
+          "200": {
+            "description": "Returns json with the keys \"user_id\", \"start_credits\"",
+            "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {"type": "string"},
+                  "start_credits": {"type": "integer"},
+                }
+            }
+          },
+          "405": {
+            "description": "The method is not allowed for the requested URL. Use GET method."
+          }
+        }
+      }
+    },
+    "/api/play-game": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Play game",
+            "description": "Select the \"Rock\", \"Scissors\" or \"Paper\" and the user_id to play",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["user_id", "players_choice"],
+              "properties": {
+                "user_id": {"type": "integer"},
+                "players_choice": {"type": "string"}
+              }
+            }
+          }
+        ],
+        "summary": "Play game",
+        "tags": ["Requests"],
+        "responses": {
+          "200": {
+            "description": "Returns json with the keys \"result\", \"rng_choice\", \"credits_before_game\", \"credits_after_game\"",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "result": {"type": "string"},
+                  "rng_choice": {"type": "string"},
+                  "credits_before_game": {"type": "integer"},
+                  "credits_after_game": {"type": "integer"}
+                }
+            }
+          },
+          "400": {
+            "description": "You don't have enough credits for the next game or you chose bad parameters You can only choose \"Rock\" \"Paper\" \"Scissors\". If you have 0 credits you can recharge them by /api/add-credits-to-user",
+            "schema": {
+                "type": "object",
+                "properties": {
+                  "Error": {"type": "string"}
+                }
+            }
+          },
+          "405": {
+            "description": "The method is not allowed for the requested URL. Use GET method."
+          }
+        }
+      }
+    },
+    "/api/add-credits-to-user": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user_id",
+            "description": "As \"user_id\" value enter the id of the user whose credits you want to top up. Only users with 0 credits can top them up.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["user_id"],
+              "properties": {
+                "user_id": {"type": "integer"}
+              }
+            }
+          }
+        ],
+        "summary": "Adding credits for a user with a specific ID",
+        "tags": ["Requests"],
+        "responses": {
+          "200": {
+            "description": "Returns json with the keys \"Message\", \"User id\", \"Credits\", \"credits_after_game\"",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Message": {"type": "string"},
+                "User id": {"type": "integer"},
+                "Credits": {"type": "integer"}
+              }
+            }
+          },
+          "400": {
+            "description": "Only 0 credits users can add new credits!",
+            "schema": {
+                "type": "object",
+                "properties": {
+                  "Error": {"type": "string"}
+                }
+            }
+          },
+          "405": {
+            "description": "The method is not allowed for the requested URL. Use GET method."
+          }
+        }
+      }
+    }
+  }
+}

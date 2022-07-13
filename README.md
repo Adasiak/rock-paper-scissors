@@ -1,29 +1,28 @@
-# README #
+# Rock Paper Scissors game with API online presentation
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## Go to
+`http://rock-paper-scissors2.herokuapp.com/` 
 
-### What is this repository for? ###
+<b>The docker container was used for deployment on herok</b>
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+![img_1.png](img_1.png)
 
-### How do I get set up? ###
+## You can get acquainted with API functions (Swagger)
+`http://rock-paper-scissors2.herokuapp.com/swagger/`
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+![img.png](img.png)
 
-### Contribution guidelines ###
+# Rock Paper Scissors game with API desktop
 
-* Writing tests
-* Code review
-* Other guidelines
+## Clone repo 
+'git clone https://Adasiak@bitbucket.org/adasiak/rock-paper-scissors.git'
 
-### Who do I talk to? ###
+## Install lib
+`pip install  -r requirements.txt`
 
-* Repo owner or admin
-* Other community or team contact
+## Run app.py
+`python app.py`
+
+Main page localhost:5000/
+
+You can get acquainted with API functions (Swagger) on your localhost:5000/swagger/
