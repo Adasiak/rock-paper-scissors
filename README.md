@@ -15,7 +15,7 @@
 # Rock Paper Scissors game with API desktop
 
 ## Clone repo 
-'git clone https://Adasiak@bitbucket.org/adasiak/rock-paper-scissors.git'
+'git clone https://github.com/Adasiak/rock-paper-scissors.git'
 
 ## Install lib
 `pip install  -r requirements.txt`
